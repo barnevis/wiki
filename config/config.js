@@ -274,7 +274,7 @@ window.shirazeh = {
     /**
      * @property {string} url - آدرس کامل مخزن گیت‌هاب شما.
      */
-    url: 'https://github.com/barnevis/shirazeh',
+    url: 'https://github.com/barnevis',
 
     /**
      * @property {string} position - موقعیت قرارگیری آیکون.
@@ -463,7 +463,7 @@ window.shirazeh = {
      * @property {Array<number>} levels - The heading levels to which anchors should be added.
      * Example: [2, 3, 4] for h2, h3, and h4.
      */
-    levels: [2, 3, 4, 5, 6],
+    levels: [2, 3,],
     
     /**
      * @property {string} icon - The icon to display. Can be an emoji or SVG markup.
