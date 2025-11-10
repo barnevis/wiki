@@ -1,0 +1,29 @@
+/*
+ * ==========================================
+ *  استایل‌های پایه و تایپوگرافی
+ * ==========================================
+ * این فایل شامل ریست کردن استایل‌های پیش‌فرض،
+ * و استایل‌های اصلی تگ‌های html و body است.
+ * تعریف فونت در فایل typography.css انجام می‌شود.
+ */
+
+/* 1. ریست کردن استایل‌ها */
+html {
+  box-sizing: border-box;
+  direction: rtl;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* 2. استایل‌های اصلی بدنه */
+body {
+  margin: 0;
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden; /* جلوگیری از اسکرول افقی ناخواسته */
+}

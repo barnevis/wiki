@@ -1,0 +1,61 @@
+/*
+ * ==========================================
+ *  چیدمان اصلی صفحه (Layout)
+ * ==========================================
+ * این فایل ساختار اصلی صفحه, شامل کانتینر اصلی،
+ * سایدبار و بخش محتوا را تعریف می‌کند.
+ */
+
+.app-container {
+  display: flex;
+}
+
+/* --- چیدمان سایدبار --- */
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0; /* جلوگیری از کوچک شدن سایدبار */
+  background-color: var(--sidebar-bg);
+  height: 100vh;
+  position: sticky; /* سایدبار با اسکرول صفحه ثابت می‌ماند */
+  top: 0;
+  border-left: 1px solid var(--border-color);
+  transition: margin-right 0.3s ease; /* انیمیشن برای پنهان شدن */
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- چیدمان بخش محتوا --- */
+.content {
+  flex-grow: 1; /* محتوا تمام فضای باقی‌مانده را اشغال می‌کند */
+  min-width: 0; /* برای جلوگیری از سرریز محتوا در فلکس‌باکس */
+}
+
+/* --- حالت جمع‌شده سایدبار --- */
+body.sidebar-collapsed .sidebar {
+    /* سایدبار را با مارجین منفی به سمت راست بیرون از صفحه می‌برد */
+    margin-right: calc(-1 * var(--sidebar-width));
+}
+
+/* --- حالت غیرفعال سایدبار --- */
+body.sidebar-disabled .sidebar,
+body.sidebar-disabled .sidebar-toggle {
+    display: none;
+}
+
+/* --- یکپارچه‌سازی با افزونه نوار ناوبری --- */
+body.shirazeh-navbar-active .sidebar {
+  /*
+   * با فعال بودن نوار ناوبری، موقعیت چسبندگی سایدبار را به زیر نوار منتقل می‌کنیم.
+   * ارتفاع آن نیز برای پر کردن فضای باقی‌مانده تنظیم می‌شود.
+   */
+  top: var(--navbar-height, 64px);
+  height: calc(100vh - var(--navbar-height, 64px));
+  /* افزودن top و height به انیمیشن برای تغییرات نرم */
+  transition: top 0.3s ease, height 0.3s ease, margin-right 0.3s ease;
+}
+
+body.shirazeh-navbar-active.navbar-scrolled .sidebar {
+  top: var(--navbar-height-scrolled, 56px);
+  height: calc(100vh - var(--navbar-height-scrolled, 56px));
+}

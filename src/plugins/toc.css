@@ -1,0 +1,148 @@
+/*
+ * Styles for the Table of Contents (TOC) plugin.
+ */
+.toc-container {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    width: 240px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding: 1rem 1rem 1rem 0; /* T R B L */
+    z-index: 50;
+    border-right: 1px solid var(--border-color);
+    transition: top 0.3s ease, max-height 0.3s ease;
+}
+
+/* Base state: hidden until proven useful */
+.toc-container,
+body:not(.toc-active) .toc-container {
+    display: none;
+}
+
+.toc-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--text-color-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.toc-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-container li {
+    margin-bottom: 0.25rem;
+}
+
+.toc-item-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.toc-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 0.5rem; /* Space on the left (visual right in RTL) */
+    color: var(--text-color);
+    line-height: 1;
+}
+
+.toc-toggle-icon {
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+    font-weight: bold;
+}
+
+.toc-item--parent.is-open .toc-toggle-icon {
+    transform: rotate(-90deg); /* Points down */
+}
+
+.toc-container a {
+    display: block;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s;
+    
+    /* For long titles */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* Make link take up available space */
+    flex-grow: 1;
+    min-width: 0; /* Important for text-overflow in flexbox */
+}
+
+.toc-container a:hover {
+    background-color: var(--border-color);
+}
+
+.toc-container a.active {
+    color: var(--primary-color);
+    background-color: hsla(var(--primary-color-hsl, 158, 64%, 67%), 0.1);
+    font-weight: 600;
+}
+
+/* Indentation for nested lists and collapsing */
+.toc-container ul ul {
+    margin-top: 0.25rem;
+    padding-right: 1.25rem; /* Increased indentation */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    width: 100%; /* Ensure it takes full width of parent li */
+}
+
+/* Open state for nested list */
+.toc-item--parent.is-open > ul {
+    max-height: 1000px; /* A large enough value to show content */
+}
+
+/* Adjust layout only on large screens when TOC is active */
+@media (min-width: 1201px) {
+    /* Show TOC container only if it is active */
+    body.toc-active .toc-container {
+        display: block;
+    }
+
+    /* Add padding to the main content to avoid overlap with the fixed TOC */
+    body.toc-active .content {
+        /* This value ensures the content's inner box starts after the TOC,
+           while maintaining its original padding for visual consistency. */
+        padding-left: calc(240px + 20px + 1.5rem);
+    }
+    
+    /*
+     * ==========================================
+     *     ↓↓↓ The fix for content width ↓↓↓
+     * ==========================================
+     * Increase the max-width of the prose area when the TOC is visible.
+     * This makes the content column wider and better utilizes the available space.
+     */
+    body.toc-active .prose {
+        max-width: 960px;
+    }
+}
+
+/* --- یکپارچه‌سازی با افزونه نوار ناوبری --- */
+body.shirazeh-navbar-active .toc-container {
+  top: calc(var(--navbar-height, 64px) + 60px);
+  max-height: calc(100vh - var(--navbar-height, 64px) - 40px);
+}
+
+body.shirazeh-navbar-active.navbar-scrolled .toc-container {
+  top: calc(var(--navbar-height-scrolled, 56px) + 60px);
+  max-height: calc(100vh - var(--navbar-height-scrolled, 56px) - 40px);
+}

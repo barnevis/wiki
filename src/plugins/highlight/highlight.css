@@ -1,0 +1,103 @@
+/*
+ * ==========================================
+ *  Styles for the Highlight.js Plugin UI
+ * ==========================================
+ * This file styles the UI elements added by the plugin,
+ * such as the language label, line numbers, and highlighted lines.
+ * The actual syntax colors are controlled by the Highlight.js theme files.
+ */
+
+/*
+ * The <pre> element's positioning context is now set in `prose.css`.
+ * Here, we add padding-top to make space for our UI elements and apply the background color.
+ */
+.prose pre {
+  padding-top: 2.5rem;
+  background-color: var(--hljs-background, #f3f4f6); /* Default light bg */
+}
+
+[data-theme="dark"] .prose pre {
+    background-color: var(--hljs-background, #1f2937); /* Default dark bg */
+}
+
+
+/* --- Language / Filename Label --- */
+.hljs-language-label {
+  position: absolute;
+  top: 0.5rem;
+  /* This correctly places the label in the top-left corner, opposite the copy button. */
+  left: 0.5rem;
+  background-color: var(--sidebar-bg);
+  color: var(--text-color);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-family: var(--font-family-main);
+  border-radius: 0.375rem;
+  font-weight: 600;
+  user-select: none;
+  z-index: 10;
+}
+
+.hljs-language-label .hljs-lang-name {
+  text-transform: uppercase;
+}
+
+.hljs-language-label .hljs-file-name {
+  text-transform: none; /* Be explicit */
+}
+
+
+/* --- Line Numbers & Line Highlighting --- */
+
+/*
+ * This is the KEY FIX: It ensures that any line wrapped by the plugin
+ * (for either line numbers OR highlighting) is displayed as a block,
+ * preventing code from collapsing onto a single line and ensuring consistent spacing.
+ */
+.prose code .hljs-line {
+  display: block;
+}
+
+/* Styles specific to when line numbers are enabled */
+.prose code.hljs-line-numbers {
+  counter-reset: line;
+  padding-left: 3.5em !important; /* Make space for line numbers */
+}
+
+/*
+ * A numbered line needs to be a positioning context for its number
+ * pseudo-element, but this should only apply when line numbers are active.
+ */
+.prose code.hljs-line-numbers .hljs-line {
+  position: relative;
+}
+
+.prose code.hljs-line-numbers .hljs-line::before {
+  content: counter(line);
+  counter-increment: line;
+  position: absolute;
+  left: -3.5em; /* Position numbers in the padding area */
+  width: 2.5em; /* Fixed width for alignment */
+  text-align: right;
+  color: var(--quote-text); /* Use a less prominent color */
+  opacity: 0.7;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+
+/* --- Highlighted Lines --- */
+.hljs-line-highlight {
+  /* Use a subtle background color that works in both light and dark themes */
+  background-color: hsla(var(--primary-color-hsl, 158, 64%, 67%), 0.1);
+  display: block; /* Ensures the background covers the full width */
+  margin: 0 -1rem; /* Extend background to fill pre padding */
+  padding: 0 1rem;
+}
+
+/* --- General HLJS adjustments to fit Shirazeh's theme --- */
+/* The inner `<code>` element must be transparent and have no extra padding. */
+.prose pre code.hljs {
+    background: transparent;
+    padding: 0;
+}
